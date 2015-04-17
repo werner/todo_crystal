@@ -6,7 +6,7 @@ def create_table(db, table_name)
 end
 
 
-db_filename = "data.sqlite3"
+db_filename = "db/data.sqlite3"
 db = SQLite3::Database.new( db_filename ) 
 create_table(db, "items") do |db|
   db.execute("create table items(id int primary key not null, description text not null, done boolean)")
