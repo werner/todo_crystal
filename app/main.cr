@@ -14,7 +14,7 @@ app.get "/" do
       end
       body do
         ul do
-          db.query("select * from items") do |row|
+          db.query("select * from tasks") do |row|
             li { row["description"] }
           end
         end
@@ -23,6 +23,21 @@ app.get "/" do
   end
   db.close
   str
+end
+
+app.get "/tasks/new" do
+  %(<html>
+    <head>
+      <title>Add a new Task</title>
+    </head>
+    <body>
+      <h1> Add a new Task </h1>
+      <form method="POST" action="/tasks/create">
+        <input type="text" name="description">
+        <input type="submit" value="Create">
+      </form>
+    </body>
+  </html>)
 end
 
 PORT = 1234

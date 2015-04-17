@@ -8,6 +8,6 @@ end
 
 db_filename = "db/data.sqlite3"
 db = SQLite3::Database.new( db_filename ) 
-create_table(db, "items") do |db|
-  db.execute("create table items(id int primary key not null, description text not null, done boolean)")
+create_table(db, "tasks") do |db|
+  db.execute("create table tasks(id int primary key not null, description text not null, done boolean)")
 end
