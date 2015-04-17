@@ -1,1 +1,6 @@
 /db/*.sqlite3
+
+/.crystal/*
+/.deps/*
+/.deps.lock
+/libs/*
