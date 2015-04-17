@@ -1,0 +1,3 @@
+deps do
+  github "manastech/crystal-sqlite3"
+end
