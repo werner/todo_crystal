@@ -1,6 +1,6 @@
 require "html/builder"
 require "sqlite3"
-require "../web_server/server.cr"
+require "../framework/server.cr"
 
 app = Server::Base.new
 db_filename = "db/data.sqlite3"
