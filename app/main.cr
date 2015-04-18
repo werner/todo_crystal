@@ -13,8 +13,9 @@ app.get "/" do
         title { text "Todo App" }
       end
       body do
-        ul do
+        ul({style: "list-style-type: none;"}) do
           db.execute("select * from tasks") do |row|
+            input({type: "checkbox"}) {}
             li { text row[1].to_s }
           end
         end
