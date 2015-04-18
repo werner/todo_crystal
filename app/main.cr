@@ -3,9 +3,9 @@ require "sqlite3"
 require "../web_server/server.cr"
 
 app = Server::Base.new
+db_filename = "db/data.sqlite3"
 
 app.get "/" do
-  db_filename = "db/data.sqlite3"
   db = SQLite3::Database.new( db_filename ) 
   str = HTML::Builder.new.build do
     html do
@@ -14,8 +14,8 @@ app.get "/" do
       end
       body do
         ul do
-          db.query("select * from tasks") do |row|
-            li { row["description"] }
+          db.execute("select * from tasks") do |row|
+            li { text row[1].to_s }
           end
         end
       end
@@ -38,6 +38,15 @@ app.get "/tasks/new" do
       </form>
     </body>
   </html>)
+end
+
+app.post "/tasks/create" do |params|
+  unless params.empty?
+    db = SQLite3::Database.new( db_filename ) 
+    db.execute "insert into tasks(description, done) values ('#{params["description"][0]}', 0)"
+    db.close
+  end
+  app.redirect_to "/"
 end
 
 PORT = 1234
