@@ -18,7 +18,7 @@ app.get "/" do
             li do
               input({type: "checkbox", disabled: "disabled"}) {}
               text row[1].to_s
-              input({type: "submit", value: "Edit"}) {}
+              a({href: "/tasks/edit/#{row[0]}"}) { text "Edit" }
             end
           end
         end
