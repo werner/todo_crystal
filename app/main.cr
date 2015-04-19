@@ -53,6 +53,22 @@ app.post "/tasks/create" do |params|
   app.redirect_to "/"
 end
 
+app.get "/tasks/edit/:id" do |params|
+  p params
+  %(<html>
+    <head>
+      <title>Add a new Task</title>
+    </head>
+    <body>
+      <h1> Add a new Task </h1>
+      <form method="POST" action="/tasks/create">
+        <input type="text" name="description">
+        <input type="submit" value="Create">
+      </form>
+    </body>
+  </html>)
+end
+
 PORT = 1234
 p "Server running on #{PORT}"
 app.run PORT
