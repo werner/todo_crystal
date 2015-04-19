@@ -15,8 +15,11 @@ app.get "/" do
       body do
         ul({style: "list-style-type: none;"}) do
           db.execute("select * from tasks") do |row|
-            input({type: "checkbox"}) {}
-            li { text row[1].to_s }
+            li do
+              input({type: "checkbox", disabled: "disabled"}) {}
+              text row[1].to_s
+              input({type: "submit", value: "Edit"}) {}
+            end
           end
         end
       end
