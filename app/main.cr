@@ -55,18 +55,19 @@ app.post "/tasks/create" do |params|
 end
 
 app.get "/tasks/edit/:id" do |params|
-  %(<html>
+  p params
+  "<html>
     <head>
-      <title>Add a new Task</title>
+      <title>Edit a Task</title>
     </head>
     <body>
-      <h1> Add a new Task </h1>
-      <form method="POST" action="/tasks/create">
-        <input type="text" name="description">
-        <input type="submit" value="Create">
+      <h1> Edit a Task </h1>
+      <form method='PUT' action='/tasks/update'>
+        <input type='text' name='description' value=#{params}>
+        <input type='submit' value='Create'>
       </form>
     </body>
-  </html>)
+  </html>"
 end
 
 PORT = 1234
