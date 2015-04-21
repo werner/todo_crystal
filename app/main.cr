@@ -54,7 +54,6 @@ app.post "/tasks/create" do |params|
 end
 
 app.get "/tasks/edit/:id" do |params|
-  p params
   %(<html>
     <head>
       <title>Add a new Task</title>
