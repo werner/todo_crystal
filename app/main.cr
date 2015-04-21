@@ -22,6 +22,7 @@ app.get "/" do
             end
           end
         end
+        a({href: "/tasks/new"}) { text "New Task" }
       end
     end
   end
