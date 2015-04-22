@@ -92,6 +92,15 @@ app.post "/tasks/update" do |params|
   app.redirect_to "/"
 end
 
+app.post "/tasks/delete/:id" do |params|
+  unless params.empty?
+    db = SQLite3::Database.new( db_filename ) 
+    db.execute "delete from tasks where id = ?", params["id"][0]
+    db.close
+  end
+  app.redirect_to "/"
+end
+
 PORT = 1234
 p "Server running on #{PORT}"
 app.run PORT
