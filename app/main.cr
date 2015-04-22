@@ -55,15 +55,15 @@ app.post "/tasks/create" do |params|
 end
 
 app.get "/tasks/edit/:id" do |params|
-  description = unless params.empty?
-                  db = SQLite3::Database.new( db_filename )
-                  task = db.execute("select * from tasks where id=? limit 1", params["id"][0])
-                  db.close
+  id, description = unless params.empty?
+                      db = SQLite3::Database.new( db_filename )
+                      task = db.execute("select * from tasks where id=? limit 1", params["id"][0])
+                      db.close
 
-                  task[0][1]
-                else
-                  ""
-                end
+                      [task.first[0], task.first[1]]
+                    else
+                      ["", ""]
+                    end
 
   "<html>
     <head>
@@ -72,8 +72,9 @@ app.get "/tasks/edit/:id" do |params|
     <body>
       <h1> Edit a Task </h1>
       <form method='PUT' action='/tasks/update'>
+        <input type='hidden' name='id' value=#{id}>
         <input type='text' name='description' value=#{description}>
-        <input type='submit' value='Create'>
+        <input type='submit' value='Update'>
       </form>
     </body>
   </html>"
