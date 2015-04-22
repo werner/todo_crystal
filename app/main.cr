@@ -73,7 +73,7 @@ app.get "/tasks/edit/:id" do |params|
       <h1> Edit a Task </h1>
       <form method='PUT' action='/tasks/update'>
         <input type='hidden' name='id' value=#{id}>
-        <input type='text' name='description' value=#{description}>
+        <input type='text' name='description' value='#{description}'>
         <input type='submit' value='Update'>
       </form>
     </body>
