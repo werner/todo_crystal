@@ -11,7 +11,7 @@ app.get "/" do
     html do
       head do
         title { text "Todo App" }
-        script({src: "/app/assets/javascript/jquery-2.1.3.min.js"}) {}
+        script({src: "app/assets/javascripts/jquery-2.1.3.min.js"}) {}
       end
       body do
         ul({style: "list-style-type: none;"}) do
@@ -83,7 +83,6 @@ app.get "/tasks/edit/:id" do |params|
 end
 
 app.post "/tasks/update" do |params|
-  p params
   unless params.empty?
     db = SQLite3::Database.new( db_filename ) 
     db.execute "update tasks set description = ? where id = ?", params["description"][0], params["id"][0]
