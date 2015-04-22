@@ -1,8 +1,8 @@
 require "html/builder"
 require "sqlite3"
-require "../framework/server.cr"
+require "amatista"
 
-app = Server::Base.new
+app = Amatista::Base.new
 db_filename = "db/data.sqlite3"
 
 app.get "/" do
