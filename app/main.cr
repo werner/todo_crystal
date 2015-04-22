@@ -11,7 +11,6 @@ app.get "/" do
     html do
       head do
         title { text "Todo App" }
-        script({src: "app/assets/javascripts/jquery-2.1.3.min.js"}) {}
       end
       body do
         ul({style: "list-style-type: none;"}) do
@@ -20,11 +19,13 @@ app.get "/" do
               input({type: "checkbox", disabled: "disabled"}) {}
               text row[1].to_s
               a({href: "/tasks/edit/#{row[0]}"}) { text "Edit" }
-              a({href: "/tasks/delete/#{row[0]}"}) { text "Delete" }
+              a({class: "del", href: "/tasks/delete/#{row[0]}"}) { text "Delete" }
             end
           end
         end
         a({href: "/tasks/new"}) { text "New Task" }
+        script({src: "app/assets/javascripts/jquery-2.1.3.min.js"}) {}
+        script({src: "app/assets/javascripts/main.js"}) {}
       end
     end
   end
