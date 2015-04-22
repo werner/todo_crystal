@@ -15,10 +15,17 @@ app.get "/" do
       body do
         ul({style: "list-style-type: none;"}) do
           db.execute("select * from tasks") do |row|
-            input({type: "checkbox"}) {}
-            li { text row[1].to_s }
+            li do
+              input({type: "checkbox", disabled: "disabled"}) {}
+              text row[1].to_s
+              a({href: "/tasks/edit/#{row[0]}"}) { text "Edit" }
+              a({class: "del", href: "/tasks/delete/#{row[0]}"}) { text "Delete" }
+            end
           end
         end
+        a({href: "/tasks/new"}) { text "New Task" }
+        script({src: "app/assets/javascripts/jquery-2.1.3.min.js"}) {}
+        script({src: "app/assets/javascripts/main.js"}) {}
       end
     end
   end
@@ -45,6 +52,50 @@ app.post "/tasks/create" do |params|
   unless params.empty?
     db = SQLite3::Database.new( db_filename ) 
     db.execute "insert into tasks(description, done) values ('#{params["description"][0]}', 0)"
+    db.close
+  end
+  app.redirect_to "/"
+end
+
+app.get "/tasks/edit/:id" do |params|
+  id, description = unless params.empty?
+                      db = SQLite3::Database.new( db_filename )
+                      task = db.execute("select * from tasks where id = ? limit 1", params["id"][0])
+                      db.close
+
+                      [task.first[0], task.first[1]]
+                    else
+                      ["", ""]
+                    end
+
+  "<html>
+    <head>
+      <title>Edit a Task</title>
+    </head>
+    <body>
+      <h1> Edit a Task </h1>
+      <form method='POST' action='/tasks/update'>
+        <input type='hidden' name='id' value=#{id}>
+        <input type='text' name='description' value='#{description}'>
+        <input type='submit' value='Update'>
+      </form>
+    </body>
+  </html>"
+end
+
+app.post "/tasks/update" do |params|
+  unless params.empty?
+    db = SQLite3::Database.new( db_filename ) 
+    db.execute "update tasks set description = ? where id = ?", params["description"][0], params["id"][0]
+    db.close
+  end
+  app.redirect_to "/"
+end
+
+app.post "/tasks/delete/:id" do |params|
+  unless params.empty?
+    db = SQLite3::Database.new( db_filename ) 
+    db.execute "delete from tasks where id = ?", params["id"][0]
     db.close
   end
   app.redirect_to "/"
