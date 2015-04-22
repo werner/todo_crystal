@@ -57,10 +57,10 @@ end
 app.get "/tasks/edit/:id" do |params|
   description = unless params.empty?
                   db = SQLite3::Database.new( db_filename )
-                  task = db.execute("select * from tasks where id=?", params["id"][0])
+                  task = db.execute("select * from tasks where id=? limit 1", params["id"][0])
                   db.close
 
-                  task[1]
+                  task[0][1]
                 else
                   ""
                 end
