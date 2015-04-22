@@ -55,7 +55,16 @@ app.post "/tasks/create" do |params|
 end
 
 app.get "/tasks/edit/:id" do |params|
-  p params
+  description = unless params.empty?
+                  db = SQLite3::Database.new( db_filename )
+                  task = db.execute("select * from tasks where id=?", params["id"][0])
+                  db.close
+
+                  task[1]
+                else
+                  ""
+                end
+
   "<html>
     <head>
       <title>Edit a Task</title>
@@ -63,7 +72,7 @@ app.get "/tasks/edit/:id" do |params|
     <body>
       <h1> Edit a Task </h1>
       <form method='PUT' action='/tasks/update'>
-        <input type='text' name='description' value=#{params}>
+        <input type='text' name='description' value=#{description}>
         <input type='submit' value='Create'>
       </form>
     </body>
