@@ -93,6 +93,18 @@ app.get "/tasks/edit/:id" do |params|
   app.respond_to(:html, html)
 end
 
+app.get "/tasks/:id/edit.json" do |params|
+  unless params.empty?
+    db = SQLite3::Database.new( db_filename )
+    task = db.execute("select * from tasks where id = ? limit 1", params["id"][0])
+    db.close
+  else
+    task = ["", ""]
+  end
+
+  app.respond_to(:json, task.to_s.to_json)
+end
+
 app.post "/tasks/update" do |params|
   unless params.empty?
     db = SQLite3::Database.new( db_filename ) 
