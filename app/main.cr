@@ -7,7 +7,7 @@ db_filename = "db/data.sqlite3"
 
 app.get "/" do
   db = SQLite3::Database.new( db_filename ) 
-  str = HTML::Builder.new.build do
+  html = HTML::Builder.new.build do
     html do
       head do
         title { text "Todo App" }
@@ -30,11 +30,11 @@ app.get "/" do
     end
   end
   db.close
-  str
+  app.respond_to(:html, html)
 end
 
 app.get "/tasks/new" do
-  %(<html>
+  html = %(<html>
     <head>
       <title>Add a new Task</title>
     </head>
@@ -46,6 +46,7 @@ app.get "/tasks/new" do
       </form>
     </body>
   </html>)
+  app.respond_to(:html, html)
 end
 
 app.post "/tasks/create" do |params|
@@ -68,19 +69,21 @@ app.get "/tasks/edit/:id" do |params|
                       ["", ""]
                     end
 
-  "<html>
-    <head>
-      <title>Edit a Task</title>
-    </head>
-    <body>
-      <h1> Edit a Task </h1>
-      <form method='POST' action='/tasks/update'>
-        <input type='hidden' name='id' value=#{id}>
-        <input type='text' name='description' value='#{description}'>
-        <input type='submit' value='Update'>
-      </form>
-    </body>
-  </html>"
+  html = 
+    "<html>
+      <head>
+        <title>Edit a Task</title>
+      </head>
+      <body>
+        <h1> Edit a Task </h1>
+        <form method='POST' action='/tasks/update'>
+          <input type='hidden' name='id' value=#{id}>
+          <input type='text' name='description' value='#{description}'>
+          <input type='submit' value='Update'>
+        </form>
+      </body>
+    </html>"
+  app.respond_to(:html, html)
 end
 
 app.post "/tasks/update" do |params|
