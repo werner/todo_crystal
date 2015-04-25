@@ -27,6 +27,7 @@ app.get "/" do
         a({href: "/tasks/new"}) { text "New Task" }
         script({src: "app/assets/javascripts/jquery-2.1.3.min.js"}) {}
         script({src: "app/assets/javascripts/main.js"}) {}
+        script({src: "app/assets/javascripts/bootstrap.min.js"}) {}
       end
     end
   end
