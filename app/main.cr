@@ -1,5 +1,6 @@
 require "html/builder"
 require "sqlite3"
+require "json"
 require "amatista"
 
 app = Amatista::Base.new
@@ -31,6 +32,12 @@ app.get "/" do
   end
   db.close
   app.respond_to(:html, html)
+end
+
+app.get "/tasks.json" do
+  db = SQLite3::Database.new( db_filename ) 
+  tasks = db.execute("select * from tasks")
+  app.respond_to(:json, tasks.to_s.to_json)
 end
 
 app.get "/tasks/new" do
