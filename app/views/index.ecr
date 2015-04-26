@@ -25,10 +25,10 @@
                         <%= task[1].to_s %>
                       </td>
                       <td>
-                        <a class="btn btn-success btn-xs" href="/tasks/edit/"<%= task[0] %>>Edit</a>
+                        <a class="btn btn-success btn-xs" href="/tasks/edit/<%= task[0] %>">Edit</a>
                       </td>
                       <td>
-                        <a class="del btn btn-danger btn-xs" href="/tasks/delete/"<%= task[0] %>>Delete</a>
+                        <a class="del btn btn-danger btn-xs" href="/tasks/delete/<%= task[0] %>">Delete</a>
                       </td>
                     <tr>
                   <% end %>
