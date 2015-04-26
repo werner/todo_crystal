@@ -11,7 +11,7 @@ app.get "/" do
   db = SQLite3::Database.new( db_filename ) 
   tasks = db.execute("select * from tasks")
   db.close
-  app.respond_to(:html, IndexView.new(tasks).to_s.strip)
+  app.respond_to(:html, LayoutView.new(IndexView.new(tasks).to_s).to_s.strip)
 end
 
 app.get "/tasks.json" do
@@ -21,19 +21,7 @@ app.get "/tasks.json" do
 end
 
 app.get "/tasks/new" do
-  html = %(<html>
-    <head>
-      <title>Add a new Task</title>
-    </head>
-    <body>
-      <h1> Add a new Task </h1>
-      <form method="POST" action="/tasks/create">
-        <input type="text" name="description">
-        <input type="submit" value="Create">
-      </form>
-    </body>
-  </html>)
-  app.respond_to(:html, html)
+  app.respond_to(:html, LayoutView.new(NewView.new.to_s).to_s.strip)
 end
 
 app.post "/tasks/create" do |params|
