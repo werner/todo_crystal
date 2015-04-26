@@ -68,6 +68,15 @@ app.post "/tasks/update" do |params|
   app.redirect_to "/"
 end
 
+app.post "/tasks/:id/check" do |params|
+  unless params.empty?
+    db = SQLite3::Database.new( db_filename ) 
+    db.execute "update tasks set done = ? where id = ?", params["done"][0], params["id"][0]
+    db.close
+  end
+  app.redirect_to "/"
+end
+
 app.post "/tasks/delete/:id" do |params|
   unless params.empty?
     db = SQLite3::Database.new( db_filename ) 

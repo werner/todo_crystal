@@ -10,8 +10,9 @@
         <% @tasks.each do |task| %>
           <tr>
             <td>
-              <input type="checkbox">
-              <%= task[1].to_s %>
+              <input class="checkTask" type="checkbox" id="checkbox_id<%= task[0] %>" 
+                     value="<%= task[0] %>" <%= task[2]==1 ? "checked" : "" %>>
+              <label for="checkbox_id<%= task[0] %>"><%= task[1].to_s %></label>
             </td>
             <td>
               <a class="btn btn-success btn-xs" href="/tasks/edit/<%= task[0] %>">Edit</a>
