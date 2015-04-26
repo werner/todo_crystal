@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>Todo App</title>
+    <link rel="stylesheet" type="text/css" href="app/assets/stylesheets/bootstrap-theme.min.css" media="all">
+    <link rel="stylesheet" type="text/css" href="app/assets/stylesheets/bootstrap.min.css" media="all">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h2 class="panel-title">Todo Tasks</h2>
+          </div>
+
+          <div class="panel-body">
+            <ul class="list-group">
+              <% @tasks.each do |task| %>
+                <li class="list-group-item">
+                  <input type="checkbox">
+                  <%= task[1].to_s %>
+                  <a href="/tasks/edit/"<%= task[0] %>>Edit</a>
+                  <a class: "del" href="/tasks/delete/"<%= task[0] %>>Delete</a>
+                </li>
+              <% end %>
+              <a href="/tasks/new">New Task</a>
+            </ul>
+          </div>
+        </div> <!--panel-->
+      </div> <!--row-->
+    </div> <!--container-->
+    <script src="app/assets/javascripts/jquery-2.1.3.min.js"></script>
+    <script src="app/assets/javascripts/main.js"></script>
+    <script src="app/assets/javascripts/bootstrap.min.js"></script>
+  </body>
+</html>

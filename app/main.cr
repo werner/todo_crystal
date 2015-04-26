@@ -1,6 +1,7 @@
 require "html/builder"
 require "sqlite3"
 require "json"
+require "./helpers/*"
 require "amatista"
 
 app = Amatista::Base.new
@@ -8,31 +9,9 @@ db_filename = "db/data.sqlite3"
 
 app.get "/" do
   db = SQLite3::Database.new( db_filename ) 
-  html = HTML::Builder.new.build do
-    html do
-      head do
-        title { text "Todo App" }
-      end
-      body do
-        ul({style: "list-style-type: none;"}) do
-          db.execute("select * from tasks") do |row|
-            li do
-              input({type: "checkbox", disabled: "disabled"}) {}
-              text row[1].to_s
-              a({href: "/tasks/edit/#{row[0]}"}) { text "Edit" }
-              a({class: "del", href: "/tasks/delete/#{row[0]}"}) { text "Delete" }
-            end
-          end
-        end
-        a({href: "/tasks/new"}) { text "New Task" }
-        script({src: "app/assets/javascripts/jquery-2.1.3.min.js"}) {}
-        script({src: "app/assets/javascripts/main.js"}) {}
-        script({src: "app/assets/javascripts/bootstrap.min.js"}) {}
-      end
-    end
-  end
+  tasks = db.execute("select * from tasks")
   db.close
-  app.respond_to(:html, html)
+  app.respond_to(:html, IndexView.new(tasks).to_s.strip)
 end
 
 app.get "/tasks.json" do
