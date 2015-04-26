@@ -44,21 +44,7 @@ app.get "/tasks/edit/:id" do |params|
                       ["", ""]
                     end
 
-  html = 
-    "<html>
-      <head>
-        <title>Edit a Task</title>
-      </head>
-      <body>
-        <h1> Edit a Task </h1>
-        <form method='POST' action='/tasks/update'>
-          <input type='hidden' name='id' value=#{id}>
-          <input type='text' name='description' value='#{description}'>
-          <input type='submit' value='Update'>
-        </form>
-      </body>
-    </html>"
-  app.respond_to(:html, html)
+  app.respond_to(:html, LayoutView.new(EditView.new(id, description).to_s).to_s.strip)
 end
 
 app.get "/tasks/:id/edit.json" do |params|

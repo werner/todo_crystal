@@ -1,0 +1,16 @@
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h2 class="panel-title">Edit a Task</h2>
+  </div>
+  <div class="panel-body">
+    <form method='POST' action='/tasks/update'>
+      <input type='hidden' name='id' value='<%= @id %>'>
+      <div class="col-xs-6">
+        <input class="form-control" type='text' name='description' value='<%= @description %>'>
+      </div>
+      <div class="col-xs-6">
+        <input class="btn btn-success" type='submit' value='Update'>
+      </div>
+    </form>
+  </div>
+</div>
