@@ -2,7 +2,7 @@ require "html/builder"
 require "sqlite3"
 require "json"
 require "./helpers/*"
-require "../../amatista/src/amatista"
+require "amatista"
 
 db_filename = "db/data.sqlite3"
 
