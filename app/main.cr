@@ -88,6 +88,10 @@ class TasksController < Amatista::Controller
 end
 
 class Main < Amatista::Base
+
+  configure do |conf|
+    conf[:secret_key] = "secret"
+  end
 end
 
 app = Main.new
