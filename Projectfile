@@ -1,5 +1,5 @@
 deps do
   github "manastech/crystal-sqlite3"
-  github "manastech/crystal-mysql"
+  github "will/crystal-pg"
   github "werner/amatista"
 end
