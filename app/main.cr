@@ -3,9 +3,10 @@ require "sqlite3"
 require "pg"
 require "json"
 require "./helpers/*"
+require "./models/*"
 require "../../amatista/src/amatista"
 
-task = PGTask.new("postgres://postgres@localhost/todo_crystal")
+task = Task.new("postgres://postgres@localhost/todo_crystal")
 
 class TasksController < Amatista::Controller
   get "/" do
@@ -44,7 +45,7 @@ class TasksController < Amatista::Controller
     unless params.empty?
       record = task.find(params["id"][0])
     else
-      task = ["", ""]
+      record = ["", ""]
     end
 
     respond_to(:json, record.to_s.to_json)
