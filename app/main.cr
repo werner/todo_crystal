@@ -1,22 +1,21 @@
 require "html/builder"
 require "sqlite3"
+require "pg"
 require "json"
 require "./helpers/*"
+require "./models/*"
 require "amatista"
 
-db_filename = "db/data.sqlite3"
+task = Task.new("postgres://postgres@localhost/todo_crystal")
 
 class TasksController < Amatista::Controller
   get "/" do
-    db = SQLite3::Database.new( db_filename ) 
-    tasks = db.execute("select * from tasks")
-    db.close
+    tasks = task.all
     respond_to(:html, LayoutView.new(IndexView.new(tasks).to_s).to_s.strip)
   end
 
   get "/tasks.json" do
-    db = SQLite3::Database.new( db_filename ) 
-    tasks = db.execute("select * from tasks")
+    tasks = task.all
     respond_to(:json, tasks.to_s.to_json)
   end
 
@@ -26,20 +25,15 @@ class TasksController < Amatista::Controller
 
   post "/tasks/create" do |params|
     unless params.empty?
-      db = SQLite3::Database.new( db_filename ) 
-      db.execute "insert into tasks(description, done) values ('#{params["description"][0]}', 0)"
-      db.close
+      task.create(params["description"][0])
     end
     redirect_to "/"
   end
 
   get "/tasks/edit/:id" do |params|
     id, description = unless params.empty?
-                        db = SQLite3::Database.new( db_filename )
-                        task = db.execute("select * from tasks where id = ? limit 1", params["id"][0])
-                        db.close
-
-                        [task.first[0], task.first[1]]
+                        record = task.find(params["id"][0])
+                        [record.first[0], record.first[1]]
                       else
                         ["", ""]
                       end
@@ -49,45 +43,41 @@ class TasksController < Amatista::Controller
 
   get "/tasks/:id/edit.json" do |params|
     unless params.empty?
-      db = SQLite3::Database.new( db_filename )
-      task = db.execute("select * from tasks where id = ? limit 1", params["id"][0])
-      db.close
+      record = task.find(params["id"][0])
     else
-      task = ["", ""]
+      record = ["", ""]
     end
 
-    respond_to(:json, task.to_s.to_json)
+    respond_to(:json, record.to_s.to_json)
   end
 
   post "/tasks/update" do |params|
     unless params.empty?
-      db = SQLite3::Database.new( db_filename ) 
-      db.execute "update tasks set description = ? where id = ?", params["description"][0], params["id"][0]
-      db.close
+      task.update(params["description"][0], params["id"][0])
     end
     redirect_to "/"
   end
 
   post "/tasks/:id/check" do |params|
     unless params.empty?
-      db = SQLite3::Database.new( db_filename ) 
-      db.execute "update tasks set done = ? where id = ?", params["done"][0], params["id"][0]
-      db.close
+      task.check(params["done"][0], params["id"][0])
     end
     redirect_to "/"
   end
 
   post "/tasks/delete/:id" do |params|
     unless params.empty?
-      db = SQLite3::Database.new( db_filename ) 
-      db.execute "delete from tasks where id = ?", params["id"][0]
-      db.close
+      task.delete(params["id"][0])
     end
     redirect_to "/"
   end
 end
 
 class Main < Amatista::Base
+
+  configure do |conf|
+    conf[:secret_key] = "secret"
+  end
 end
 
 app = Main.new
