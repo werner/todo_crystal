@@ -1,32 +1,31 @@
-class Task
+class Task < Amatista::Model
   property connection
   
-  def initialize(@connection)
-    @db = PG.connect(@connection)
+  def self.all
+    records = [] of String
+    connect {|db| records = db.exec("select * from tasks").rows }
+    records
   end
 
-  def all
-    @db.exec("select * from tasks").rows
+  def self.create(description)
+    connect {|db| db.exec("insert into tasks(description, done) values ($1, false)", [description]) }
   end
 
-  def create(description)
-    p description
-    @db.exec("insert into tasks(description, done) values ($1, false)", [description])
+  def self.find(id)
+    record = [] of String
+    connect {|db| record = db.exec("select * from tasks where id = $1 limit 1", [id]).rows }
+    record
   end
 
-  def find(id)
-    @db.exec("select * from tasks where id = $1 limit 1", [id]).rows
+  def self.update(description, id)
+    connect {|db| db.exec("update tasks set description = $1 where id = $2", [description, id]) }
   end
 
-  def update(description, id)
-    @db.exec("update tasks set description = $1 where id = $2", [description, id])
+  def self.check(done, id)
+    connect {|db| db.exec("update tasks set done = $1 where id = $2", [done, id]) }
   end
 
-  def check(done, id)
-    @db.exec("update tasks set done = $1 where id = $2", [done, id])
-  end
-
-  def delete(id)
-   @db.exec("delete from tasks where id = $1", [id])
+  def self.delete(id)
+    connect {|db| db.exec("delete from tasks where id = $1", [id]) }
   end
 end

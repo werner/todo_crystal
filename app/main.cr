@@ -1,17 +1,17 @@
 require "html/builder"
+require "../../amatista/src/amatista"
 require "sqlite3"
 require "pg"
 require "json"
 require "./helpers/*"
-require "./controllers/*"
 require "./models/*"
-require "../../amatista/src/amatista"
-
-task = Task.new("postgres://postgres@localhost/todo_crystal")
+require "./controllers/*"
 
 class Main < Amatista::Base
   configure do |conf|
-    conf[:secret_key] = "secret"
+    conf[:secret_key]          = "secret"
+    conf[:database_driver]     = "postgres"
+    conf[:database_connection] = "postgres://postgres@localhost/todo_crystal"
   end
 end
 
