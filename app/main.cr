@@ -4,7 +4,7 @@ require "pg"
 require "json"
 require "./helpers/*"
 require "./models/*"
-require "../../amatista/src/amatista"
+require "amatista"
 
 task = Task.new("postgres://postgres@localhost/todo_crystal")
 
