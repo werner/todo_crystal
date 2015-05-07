@@ -1,11 +1,11 @@
 class TasksController < Amatista::Controller
   get "/" do
-    tasks = task.all
+    tasks = Task.all
     respond_to(:html, LayoutView.new(IndexView.new(tasks).to_s).to_s.strip)
   end
 
   get "/tasks.json" do
-    tasks = task.all
+    tasks = Task.all
     respond_to(:json, tasks.to_s.to_json)
   end
 
@@ -15,15 +15,15 @@ class TasksController < Amatista::Controller
 
   post "/tasks/create" do |params|
     unless params.empty?
-      task.create(params["description"][0])
+      Task.create(params["description"][0])
     end
     redirect_to "/"
   end
 
   get "/tasks/edit/:id" do |params|
     id, description = unless params.empty?
-                        record = task.find(params["id"][0])
-                        [record.first[0], record.first[1]]
+                        task = Task.find(params["id"][0])
+                        [task.first[0], task.first[1]]
                       else
                         ["", ""]
                       end
@@ -33,31 +33,31 @@ class TasksController < Amatista::Controller
 
   get "/tasks/:id/edit.json" do |params|
     unless params.empty?
-      record = task.find(params["id"][0])
+      task = Task.find(params["id"][0])
     else
-      record = ["", ""]
+      task = ["", ""]
     end
 
-    respond_to(:json, record.to_s.to_json)
+    respond_to(:json, task.to_s.to_json)
   end
 
   post "/tasks/update" do |params|
     unless params.empty?
-      task.update(params["description"][0], params["id"][0])
+      Task.update(params["description"][0], params["id"][0])
     end
     redirect_to "/"
   end
 
   post "/tasks/:id/check" do |params|
     unless params.empty?
-      task.check(params["done"][0], params["id"][0])
+      Task.check(params["done"][0], params["id"][0])
     end
     redirect_to "/"
   end
 
   post "/tasks/delete/:id" do |params|
     unless params.empty?
-      task.delete(params["id"][0])
+      Task.delete(params["id"][0])
     end
     redirect_to "/"
   end
