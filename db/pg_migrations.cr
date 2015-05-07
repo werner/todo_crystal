@@ -5,7 +5,7 @@ def create_table(db, table_name)
   end
 end
 
-db = PG.connect("postgres://postgres@localhost/todo_crystal")
+db = PG.connect(ENV["DATABASE_URL"])
 create_table(db, "tasks") do |db|
   res = db.exec("create table tasks(id serial primary key, description text not null, done boolean)")
 end

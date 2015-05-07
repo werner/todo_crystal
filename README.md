@@ -8,6 +8,10 @@ This is a Todo App made with Crystal.
 ##### If you're upgrading remove .deps.lock and .deps folder
 
 ```
+export DATABASE_URL="postgres://..."
+```
+
+```
 crystal deps
 ```
 
