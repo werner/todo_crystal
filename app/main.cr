@@ -3,7 +3,7 @@ require "amatista"
 require "sqlite3"
 require "pg"
 require "json"
-require "./helpers/*"
+require "./view_models/*"
 require "./models/*"
 require "./controllers/*"
 
