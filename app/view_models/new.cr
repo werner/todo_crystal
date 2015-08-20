@@ -1,9 +1,6 @@
-require "ecr"
-require "ecr/macros"
-
-class NewView
+class NewView < Amatista::BaseView
   def initialize
   end
 
-  ecr_file "app/views/new.ecr"
+  set_ecr "new"
 end

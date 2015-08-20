@@ -1,9 +1,6 @@
-require "ecr"
-require "ecr/macros"
-
-class EditView
+class EditView < Amatista::BaseView
   def initialize(@id, @description)
   end
 
-  ecr_file "app/views/edit.ecr"
+  set_ecr "edit"
 end

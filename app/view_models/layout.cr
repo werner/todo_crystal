@@ -1,9 +1,6 @@
-require "ecr"
-require "ecr/macros"
-
-class LayoutView
+class LayoutView < Amatista::BaseView
   def initialize(@include)
   end
 
-  ecr_file "app/views/layout.ecr"
+  set_ecr "layout"
 end

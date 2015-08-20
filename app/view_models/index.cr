@@ -1,7 +1,4 @@
-require "ecr"
-require "ecr/macros"
-
-class IndexView
+class IndexView < Amatista::BaseView
   def initialize(@tasks)
   end
 
@@ -9,5 +6,5 @@ class IndexView
     @tasks.count
   end
 
-  ecr_file "app/views/index.ecr"
+  set_ecr "index"
 end
