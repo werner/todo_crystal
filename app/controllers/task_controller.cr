@@ -15,7 +15,7 @@ class TasksController < Amatista::Controller
 
   post "/tasks/create" do |params|
     unless params.empty?
-      Task.create(params["description"][0])
+      Task.create(params["task[description]"][0])
     end
     redirect_to "/"
   end

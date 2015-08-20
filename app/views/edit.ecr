@@ -3,6 +3,7 @@
     <h2 class="panel-title">Edit a Task</h2>
   </div>
   <div class="panel-body">
+    <%= form %>
     <form method='POST' action='/tasks/update'>
       <input type='hidden' name='id' value='<%= @id %>'>
       <div class="col-xs-6">
