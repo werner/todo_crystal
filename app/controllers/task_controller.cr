@@ -43,7 +43,7 @@ class TasksController < Amatista::Controller
 
   post "/tasks/update" do |params|
     unless params.empty?
-      Task.update(params["description"][0], params["id"][0])
+      Task.update(params["task[description]"][0], params["task[id]"][0])
     end
     redirect_to "/"
   end
