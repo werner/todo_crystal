@@ -3,7 +3,7 @@ class Task < Amatista::Model
   
   def self.all
     records = [] of String
-    connect {|db| records = db.exec("select * from tasks").rows }
+    connect {|db| records = db.exec("select * from tasks order by done").rows }
     records
   end
 

@@ -9,21 +9,20 @@
       <% @tasks.each do |task| %>
         <tr>
           <td>
-            <input class="checkTask" type="checkbox" id="checkbox_id<%= task[0] %>" 
-                   value="<%= task[0] %>" <%= task[2]==1 ? "checked" : "" %>>
-            <label for="checkbox_id<%= task[0] %>"><%= task[1].to_s %></label>
+            <%= check_box_tag(:task, "id#{task[0]}", task[0], task[2], { class: "checkTask" }) %>
+            <%= label_tag("task_id#{task[0]}", task[1].to_s) %>
           </td>
           <td>
-            <a class="btn btn-success btn-xs" href="/tasks/edit/<%= task[0] %>">Edit</a>
+            <%= link_to("Edit", "/tasks/edit/#{task[0]}", { class: "btn btn-success btn-xs" }) %>
           </td>
           <td>
-            <a class="del btn btn-danger btn-xs" href="/tasks/delete/<%= task[0] %>">Delete</a>
+            <%= link_to("Delete", "/tasks/delete/#{task[0]}", { class: "del btn btn-danger btn-xs" }) %>
           </td>
         <tr>
       <% end %>
       <tbody>
     </table>
-    <a class="btn btn-info btn-xs" href="/tasks/new">New Task</a>
-    <label for="">Total: <%= tasks_count %> </label>
+    <%= link_to("New Task", "/tasks/new", { class: "btn btn-info btn-xs" } ) %>
+    <%= label_tag("total", "Total: #{tasks_count}" ) %>
   </div>
 </div>
