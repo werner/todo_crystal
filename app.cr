@@ -3,9 +3,9 @@ require "amatista"
 require "sqlite3"
 require "pg"
 require "json"
-require "./view_models/*"
-require "./models/*"
-require "./controllers/*"
+require "./app/view_models/*"
+require "./app/models/*"
+require "./app/controllers/*"
 
 class Main < Amatista::Base
   configure do |conf|
