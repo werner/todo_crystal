@@ -6,6 +6,7 @@ require "json"
 require "./app/view_models/*"
 require "./app/models/*"
 require "./app/controllers/*"
+require "option_parser"
 
 class Main < Amatista::Base
   configure do |conf|
@@ -17,6 +18,11 @@ end
 
 app = Main.new
 
-PORT = 1234
-p "Server running on #{PORT}"
-app.run PORT
+main_port = 1234
+OptionParser.parse! do |opts|
+  opts.on("-p PORT", "--port PORT", "define port to run server") do |port|
+    main_port = port.to_i
+  end
+end
+p "Server running on #{main_port}"
+app.run main_port
