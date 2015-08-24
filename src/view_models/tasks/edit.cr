@@ -1,4 +1,4 @@
-class EditView < Amatista::BaseView
+class TasksEditView < Amatista::BaseView
   def initialize(@id, @description)
   end
 
@@ -16,5 +16,5 @@ class EditView < Amatista::BaseView
     end
   end
 
-  set_ecr "edit"
+  set_ecr "tasks/edit"
 end

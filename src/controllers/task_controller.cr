@@ -1,7 +1,7 @@
 class TasksController < Amatista::Controller
   get "/" do
     tasks = Task.all
-    respond_to(:html, IndexView.new(tasks).set_view)
+    respond_to(:html, TasksIndexView.new(tasks).set_view)
   end
 
   get "/tasks.json" do
@@ -10,7 +10,7 @@ class TasksController < Amatista::Controller
   end
 
   get "/tasks/new" do
-    respond_to(:html, NewView.new.set_view)
+    respond_to(:html, TasksNewView.new.set_view)
   end
 
   post "/tasks/create" do |params|
@@ -28,7 +28,7 @@ class TasksController < Amatista::Controller
                         ["", ""]
                       end
 
-    respond_to(:html, EditView.new(id, description).set_view)
+    respond_to(:html, TasksEditView.new(id, description).set_view)
   end
 
   get "/tasks/:id/edit.json" do |params|

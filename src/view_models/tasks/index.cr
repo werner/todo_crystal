@@ -1,4 +1,4 @@
-class IndexView < Amatista::BaseView
+class TasksIndexView < Amatista::BaseView
   def initialize(@tasks)
   end
 
@@ -6,5 +6,5 @@ class IndexView < Amatista::BaseView
     @tasks.count
   end
 
-  set_ecr "index"
+  set_ecr "tasks/index"
 end
