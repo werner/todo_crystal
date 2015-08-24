@@ -1,11 +1,11 @@
 require "html/builder"
-require "amatista"
+require "../amatista/src/amatista"
 require "sqlite3"
 require "pg"
 require "json"
-require "./app/view_models/*"
-require "./app/models/*"
-require "./app/controllers/*"
+require "./src/view_models/*"
+require "./src/models/*"
+require "./src/controllers/*"
 require "option_parser"
 
 class Main < Amatista::Base
