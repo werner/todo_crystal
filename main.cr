@@ -1,5 +1,5 @@
 require "html/builder"
-require "../amatista/src/amatista"
+require "amatista"
 require "sqlite3"
 require "pg"
 require "json"
