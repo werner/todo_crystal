@@ -1,4 +1,4 @@
-class TasksController < Amatista::Controller
+class TasksController < ApplicationController
   get "/" do
     tasks = Task.all
     respond_to(:html, TasksIndexView.new(tasks).set_view)
