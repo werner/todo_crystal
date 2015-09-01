@@ -11,4 +11,17 @@ class User < Amatista::Model
       raise "password and password confirmation do not match"
     end
   end
+
+  def self.login(email, password)
+    user = [] of Hash(String, String)
+    connect {|db| user = db.exec({Int32, String, String, String}, 
+                                 "select id, name, email, password from users where email = $1", 
+                                 [email]).rows }
+
+    if user
+      verified = Crypto::Bcrypt.verify(password, user[0][3])
+      user if verified
+    end
+  end
+
 end
