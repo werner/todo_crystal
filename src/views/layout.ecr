@@ -8,6 +8,11 @@
     <div class="container">
       <div class="row">
         <div class="col-xs-8">
+          <%= logout if logged_in? %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-8">
           <%= @include %>
         </div>
       </div>

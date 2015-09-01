@@ -13,4 +13,9 @@ class SessionsController < Amatista::Controller
     end
     redirect_to("/sessions/new")
   end
+
+  post "/sessions/destroy" do
+    remove_session("user_id")
+    redirect_to("/sessions/new")
+  end
 end
