@@ -7,8 +7,14 @@ class Task < Amatista::Model
     records
   end
 
-  def self.create(description)
-    connect {|db| db.exec("insert into tasks(description, done) values ($1, false)", [description]) }
+  def self.all_by_user(user_id)
+    records = [] of String
+    connect {|db| records = db.exec("select * from tasks where user_id = $1 order by done", [user_id]).rows }
+    records
+  end
+
+  def self.create(description, user_id)
+    connect {|db| db.exec("insert into tasks(description, user_id, done) values ($1, $2, false)", [description, user_id]) }
   end
 
   def self.find(id)

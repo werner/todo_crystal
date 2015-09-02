@@ -24,4 +24,10 @@ class User < Amatista::Model
     end
   end
 
+  def self.find_by_email(email)
+    user = [] of Hash(String, String)
+    connect {|db| user = db.exec("select id, name, email, password from users where email = $1 limit 1", 
+                                 [email]).to_hash }
+    user[0] if user.length > 0
+  end
 end

@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   get "/" do
-    tasks = Task.all
+    tasks = Task.all_by_user(get_session("user_id"))
     respond_to(:html, TasksIndexView.new(tasks).set_view)
   end
 
@@ -15,7 +15,7 @@ class TasksController < ApplicationController
 
   post "/tasks/create" do |params|
     unless params.empty?
-      Task.create(params["task[description]"][0])
+      Task.create(params["task[description]"][0], get_session("user_id"))
     end
     redirect_to "/"
   end

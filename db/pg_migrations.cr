@@ -8,13 +8,9 @@ end
 
 db = PG.connect(ENV["DATABASE_URL"])
 create_table(db, "tasks") do |db|
-  res = db.exec("create table tasks(id serial primary key, description text not null, done boolean)")
+  res = db.exec("create table tasks(id serial primary key, description text not null, done boolean, user_id integer)")
 end
 
 create_table(db, "users") do |db|
   res = db.exec("create table users(id serial primary key, name varchar(100), email varchar(50), password varchar(100))")
-end
-
-create_table(db, "tasks_users") do |db|
-  res = db.exec("create table tasks_users(user_id integer, task_id integer)")
 end
