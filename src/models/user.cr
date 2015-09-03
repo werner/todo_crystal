@@ -17,8 +17,7 @@ class User < Amatista::Model
     connect {|db| user = db.exec({Int32, String, String, String}, 
                                  "select id, name, email, password from users where email = $1", 
                                  [email]).rows }
-
-    if user
+    unless user.empty?
       verified = Crypto::Bcrypt.verify(password, user[0][3])
       user if verified
     end

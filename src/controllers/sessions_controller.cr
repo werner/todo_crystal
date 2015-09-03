@@ -8,7 +8,11 @@ class SessionsController < Amatista::Controller
       user = User.login(params["session[email]"][0], params["session[password]"][0])
       if user
         set_session("user_id", user[0][0].to_s)
+        set_flash(:message, "User authenticated.")
         return redirect_to("/")
+      else
+        set_flash(:message, 
+                  "Error in user authentication, please verify your email and password.")
       end
     end
     redirect_to("/sessions/new")
