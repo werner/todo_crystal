@@ -13,7 +13,7 @@ class Main < Amatista::Base
     conf[:secret_key]          = "secret"
     conf[:database_driver]     = "postgres"
     conf[:database_connection] = ENV["DATABASE_URL"] 
-    conf[:logs]                = "true"
+    conf[:logs]                = true
   end
 end
 
