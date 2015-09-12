@@ -19,8 +19,8 @@ class Task < Amatista::Model
 
   def self.find(id)
     record = [] of String
-    connect {|db| record = db.exec("select * from tasks where id = $1 limit 1", [id]).rows }
-    record
+    connect {|db| record = db.exec("select * from tasks where id = $1 limit 1", [id]).to_hash }
+    record.first
   end
 
   def self.update(description, id)

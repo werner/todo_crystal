@@ -5,7 +5,7 @@ class SessionsController < Amatista::Controller
 
   post "/sessions/create" do |params|
     unless params.empty?
-      user = User.login(params["session[email]"][0], params["session[password]"][0])
+      user = User.login(params["session"]["email"], params["session"]["password"])
       if user
         set_session("user_id", user[0]["id"])
         set_flash(:message, "User authenticated.")
