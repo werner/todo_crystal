@@ -22,7 +22,7 @@ class TasksController < ApplicationController
 
   get "/tasks/edit/:id" do |params|
     id, description = unless params.empty?
-                        task = Task.find(params["id"].first_key)
+                        task = Task.find(params["id"])
                         [task["id"], task["description"]]
                       else
                         ["", ""]
@@ -33,7 +33,7 @@ class TasksController < ApplicationController
 
   get "/tasks/:id/edit.json" do |params|
     unless params.empty?
-      task = Task.find(params["id"].first_key)
+      task = Task.find(params["id"])
     else
       task = ["", ""]
     end
@@ -50,14 +50,14 @@ class TasksController < ApplicationController
 
   post "/tasks/:id/check" do |params|
     unless params.empty?
-      Task.check(params["done"].first_key, params["id"].first_key)
+      Task.check(params["done"], params["id"])
     end
     redirect_to "/"
   end
 
   post "/tasks/delete/:id" do |params|
     unless params.empty?
-      Task.delete(params["id"].first_key)
+      Task.delete(params["id"])
     end
     redirect_to "/"
   end
