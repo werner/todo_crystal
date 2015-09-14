@@ -12,13 +12,13 @@ class User < Amatista::Model
     end
   end
 
-  def self.login(email, password)
+  def self.login(email : String, password : String) : Hash(String, String) | Nil
     user = [] of Hash(String, String)
     connect {|db| user = db.exec({String, String, String, String}, 
                                  "select id::varchar, name, email, password from users where email = $1", 
-                                 [email]).to_hash }
-    unless user.empty?
-      verified = Crypto::Bcrypt.verify(password, user[0]["password"])
+                                 [email]).to_hash.first }
+    if user.is_a?(Hash(String, String))
+      verified = Crypto::Bcrypt.verify(password, user["password"])
       user if verified
     end
   end
