@@ -1,0 +1,14 @@
+name: shards
+version: 0.4.0
+
+dependencies:
+  sqlite3:
+    github: manastech/crystal-sqlite3
+  pg:
+    github: will/crystal-pg
+  amatista:
+    github: werner/amatista
+  mime:
+    github: spalger/crystal-mime
+
+license: MIT

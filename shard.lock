@@ -1,0 +1,18 @@
+version: 1.0
+shards:
+  amatista:
+    github: werner/amatista
+    version: 0.4.0
+
+  mime:
+    github: spalger/crystal-mime
+    version: HEAD
+
+  pg:
+    github: will/crystal-pg
+    version: 0.4.0
+
+  sqlite3:
+    github: manastech/crystal-sqlite3
+    version: HEAD
+
