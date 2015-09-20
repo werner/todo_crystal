@@ -3,7 +3,7 @@ class TasksIndexView < Amatista::BaseView
   end
 
   def tasks_count
-    @tasks.count
+    @tasks.size
   end
 
   set_ecr "tasks/index"
