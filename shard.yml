@@ -10,5 +10,7 @@ dependencies:
     github: werner/amatista
   mime:
     github: spalger/crystal-mime
+  html_builder:
+    github: crystal-lang/html_builder
 
 license: MIT

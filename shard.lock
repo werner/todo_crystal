@@ -4,6 +4,10 @@ shards:
     github: werner/amatista
     version: 0.5.2
 
+  html_builder:
+    github: crystal-lang/html_builder
+    version: 0.1.0
+
   mime:
     github: werner/crystal-mime
     commit: 158bd10ce973fad42f4e4b9c64a2e4d4ad1a044b

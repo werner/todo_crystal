@@ -1,4 +1,4 @@
-require "html/builder"
+require "html_builder"
 require "amatista"
 require "sqlite3"
 require "pg"
