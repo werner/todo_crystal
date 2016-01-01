@@ -12,7 +12,8 @@ class Main < Amatista::Base
   configure do |conf|
     conf[:secret_key]          = "secret"
     conf[:database_driver]     = "postgres"
-    conf[:database_connection] = ENV["DATABASE_URL"] 
+    url_db = ENV["DATABASE_URL"]? || "postgres://postgres@localhost/todo_crystal"
+    conf[:database_connection] = url_db
     conf[:logs]                = true
   end
 end
