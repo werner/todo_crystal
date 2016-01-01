@@ -1,10 +1,9 @@
-require "secure_random"
-require "crypto/bcrypt"
+require "crypto/bcrypt/password"
 
 class User < Amatista::Model
   def self.create(name, email, raw_password, raw_password_confirmation)
     if raw_password == raw_password_confirmation
-      password = Crypto::Bcrypt.digest(raw_password, 9)
+      password = Crypto::Bcrypt::Password.create(raw_password, 5)
       connect {|db| db.exec("insert into users(name, email, password) values ($1, $2, $3)", 
                             [name, email, password]) }
     else
@@ -18,8 +17,8 @@ class User < Amatista::Model
                                  "select id::varchar, name, email, password from users where email = $1", 
                                  [email]).to_hash.first }
     if user.is_a?(Hash(String, String))
-      verified = Crypto::Bcrypt.verify(password, user["password"])
-      user if verified
+      db_password = Crypto::Bcrypt::Password.new(user["password"])
+      user if db_password == password
     end
   end
 
